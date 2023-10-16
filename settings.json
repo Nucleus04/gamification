@@ -1,0 +1,62 @@
+{
+    "public": {},
+    "redisOplog": {
+        "redis": {
+            "port": 6379,
+            "host": "127.0.0.1"
+        },
+        "retryIntervalMs": 10000,
+        "mutationDefaults": {
+            "optimistic": true,
+            "pushToRedis": true
+        },
+        "debug": false
+    },
+    "issuer": "https://account.hubstaff.com",
+    "authorization_endpoint": "https://account.hubstaff.com/authorizations/new",
+    "jwks_uri": "https://account.hubstaff.com/jwks.json",
+    "response_types_supported": [
+        "code"
+    ],
+    "subject_types_supported": [
+        "public",
+        "pairwise"
+    ],
+    "id_token_signing_alg_values_supported": [
+        "RS256"
+    ],
+    "token_endpoint": "https://account.hubstaff.com/access_tokens",
+    "userinfo_endpoint": "https://account.hubstaff.com/user_info",
+    "scopes_supported": [
+        "openid",
+        "profile",
+        "email",
+        "tasks:read",
+        "tasks:write",
+        "hubstaff:read",
+        "hubstaff:write"
+    ],
+    "grant_types_supported": [
+        "authorization_code",
+        "refresh_token"
+    ],
+    "request_object_signing_alg_values_supported": [
+        "HS256",
+        "HS384",
+        "HS512"
+    ],
+    "token_endpoint_auth_methods_supported": [
+        "client_secret_basic",
+        "client_secret_post"
+    ],
+    "claims_supported": [
+        "sub",
+        "iss",
+        "name",
+        "email"
+    ],
+    "personal_access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImRlZmF1bHQifQ.eyJqdGkiOiJVRktYbS9zWiIsImlzcyI6Imh0dHBzOi8vYWNjb3VudC5odWJzdGFmZi5jb20iLCJleHAiOjE3MDI0NzExNjIsImlhdCI6MTY5NDY5NTE2Miwic2NvcGUiOiJodWJzdGFmZjpyZWFkIn0.bLP_ZCAn2ydGcaN8UMT3WonY4facjzCso8ppj6ONnHL25gZEVLMVsLm67Ye8btG1XdOPJIZeKG_8C73X21aNBIAa_1fVbbMtd8MjvqffBYyA-kz_9AIOCN0tXbBXL5O-Xg1fGq-fXb97I3jmmPMxxsUEHvKEJxK17m1TsKufYvlTakxb98mkLzsdExsq86VdHEfqoaUnvuxvPr3ehKOJf5_Qy727t7WL2N7aWODCaLY2uU5ulaWu2dLEi4GESYcqEnnk55BTc79000B1YK6IVIFdDhvb20SLTmX5vDXjSMLon9negqfHoztzQkV-7-6hbwHACEINdpaZyz91tvTtIA",
+    "client_id": "SvFDbD4jtWJ8iCotYZ1A-ZgWYqAsa0swMfJV9MY7wTk",
+    "client_secret": "6LNMF6y5Hd2wQBHaRkURQGBRAscv4emZM0TkfufdTRRbpULcw5M3l5mPhmwb-sh86WSRadDBVJiSzHsnkuUF4w",
+    "redirect_uri": "http://localhost:3000/goals"
+}

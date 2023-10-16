@@ -1,0 +1,22 @@
+.goals-options-modal {
+    position: absolute;
+    width: 110px;
+    height: 70px;
+    background-color: rgb(222, 222, 222);
+    z-index: 77777;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translate(-75px, 0px);
+}
+
+.goals-options-modal span {
+    width: 90%;
+}
+
+.goals-option-button {
+    border-radius: 7px;
+    margin: 2px;
+    width: 100%;
+}

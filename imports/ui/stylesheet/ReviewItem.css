@@ -1,0 +1,288 @@
+.comment-container {
+    width: 100%;
+}
+
+
+.commentItem {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.skeleton-text {
+    background-color: rgb(213, 213, 213);
+    color: rgb(213, 213, 213);
+    border-radius: 10px;
+    font-size: 9pt;
+}
+
+.show-more {
+
+    width: 100%;
+    height: 60px;
+    border-radius: 10px;
+    background-color: rgb(113, 113, 113);
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    color: white;
+
+}
+
+.privacy-box {
+    position: absolute;
+    transform: translate(180px, 25px);
+    border-radius: 7px;
+    padding: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+    background-color: white;
+
+    color: #414042;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 25px;
+}
+
+.privacy-box-date {
+    position: absolute;
+    transform: translate(10px, 35px);
+    border-radius: 7px;
+    padding: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+    background-color: white;
+    z-index: 0;
+}
+
+.privacy-box-date2 {
+    position: absolute;
+    transform: translate(0px, 45px);
+    border-radius: 7px;
+    padding: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+    background-color: white;
+}
+
+.br-yellow {
+    background-color: #fbb03b;
+}
+
+
+.filter-modal {
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+    width: 200px;
+
+    transform: translate(0, 68px);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    transform: translate(0px, 90px);
+    color: rgb(45, 45, 45);
+
+}
+
+.filter-item {
+    width: 170px;
+    height: 35px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    margin-bottom: 7px;
+}
+
+.filter-item:hover {
+    background-color: #6524fe;
+}
+
+.filter-item:first-child {
+    margin-top: 10px;
+}
+
+.display-none {
+    display: none;
+    opacity: 0;
+}
+
+.bg-red {
+    background-color: #ff4c4c;
+    color: white;
+}
+
+.bg-gray {
+    background-color: rgb(155, 155, 155);
+}
+
+.bg-green {
+    background-color: #009245;
+}
+
+.profile-text {
+    font-size: 15pt;
+    font-weight: 600;
+    border-radius: 50%;
+}
+
+/* Style for letter 'A' */
+.A {
+    background-color: #E6FFE6;
+    /* Light green for 'A' */
+}
+
+/* Style for letter 'B' */
+.B {
+    background-color: #FFFFCC;
+    /* Light yellow for 'B' */
+}
+
+/* Style for letter 'C' */
+.C {
+    background-color: #FFD9E6;
+    /* Light pink for 'C' */
+}
+
+/* Style for letter 'D' */
+.D {
+    background-color: #E6CCFF;
+    /* Light purple for 'D' */
+}
+
+/* Style for letter 'E' */
+.E {
+    background-color: #CCE6FF;
+    /* Light blue for 'E' */
+}
+
+/* Style for letter 'F' */
+.F {
+    background-color: #FFE6CC;
+    /* Light orange for 'F' */
+}
+
+/* Style for letter 'G' */
+.G {
+    background-color: #CCFFCC;
+    /* Light mint green for 'G' */
+}
+
+/* Style for letter 'H' */
+.H {
+    background-color: #FFCCCC;
+    /* Light coral for 'H' */
+}
+
+/* Style for letter 'I' */
+.I {
+    background-color: #E6E6E6;
+    /* Light gray for 'I' */
+}
+
+/* Style for letter 'J' */
+.J {
+    background-color: #FFD700;
+    /* Light gold for 'J' */
+}
+
+/* Style for letter 'K' */
+.K {
+    background-color: #FFC0CB;
+    /* Light pink for 'K' */
+}
+
+/* Style for letter 'L' */
+.L {
+    background-color: #FFF0F5;
+    /* Lavender blush for 'L' */
+}
+
+/* Style for letter 'M' */
+.M {
+    background-color: #98FB98;
+    /* Pale green for 'M' */
+}
+
+/* Style for letter 'N' */
+.N {
+    background-color: #F0E68C;
+    /* Khaki for 'N' */
+}
+
+/* Style for letter 'O' */
+.O {
+    background-color: #D3D3D3;
+    /* Light gray for 'O' */
+}
+
+/* Style for letter 'P' */
+.P {
+    background-color: #FF69B4;
+    /* Hot pink for 'P' */
+}
+
+/* Style for letter 'Q' */
+.Q {
+    background-color: #F08080;
+    /* Light coral for 'Q' */
+}
+
+/* Style for letter 'R' */
+.R {
+    background-color: #90EE90;
+    /* Light green for 'R' */
+}
+
+/* Style for letter 'S' */
+.S {
+    background-color: #87CEFA;
+    /* Light sky blue for 'S' */
+}
+
+/* Style for letter 'T' */
+.T {
+    background-color: #FFA07A;
+    /* Light salmon for 'T' */
+}
+
+/* Style for letter 'U' */
+.U {
+    background-color: #DDA0DD;
+    /* Light purple for 'U' */
+}
+
+/* Style for letter 'V' */
+.V {
+    background-color: #B0E0E6;
+    /* Powder blue for 'V' */
+}
+
+/* Style for letter 'W' */
+.W {
+    background-color: #FFDAB9;
+    /* Peachpuff for 'W' */
+}
+
+/* Style for letter 'X' */
+.X {
+    background-color: #F5DEB3;
+    /* Wheat for 'X' */
+}
+
+/* Style for letter 'Y' */
+.Y {
+    background-color: #FFFF00;
+    /* Yellow for 'Y' */
+}
+
+/* Style for letter 'Z' */
+.Z {
+    background-color: #E0FFFF;
+    /* Light cyan for 'Z' */
+}
