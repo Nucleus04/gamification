@@ -128,7 +128,7 @@ class Goals extends Component {
                                                         </div>
 
                                                     )
-                                                }) : ""
+                                                }) : <p style={{ textAlign: "center", fontSize: "16pt" }}>There is no current goals.</p>
                                             }
 
 

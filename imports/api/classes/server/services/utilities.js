@@ -1,6 +1,11 @@
 
 
 class utilities {
+    /**
+     * calculate total average percentage for array of activity. Example is week
+     * @param {*} activities array of attendance with billable and overall field
+     * @returns average actvity for range of time
+     */
     calculateAverageActivity(activities) {
         let percentage = [];
         activities.forEach((element) => {
@@ -35,8 +40,8 @@ class utilities {
             totalTime = totalTime + element.overall;
         });
 
-        let hour = Math.floor(totalTime / activities.length / 360);
-        let minute = Math.floor(((totalTime / activities.length) % 360) % 60);
+        let hour = Math.floor(totalTime / activities.length / 3600);
+        let minute = Math.floor(((totalTime / activities.length) % 3600) / 60);
 
         return {
             hour,
@@ -50,13 +55,23 @@ class utilities {
         activities.forEach(element => {
             totalTime = totalTime + element.billable;
         });
-        let hour = Math.floor(totalTime / activities.length / 360);
-        let minute = Math.floor(((totalTime / activities.length) % 360) % 60);
+        let hour = Math.floor(totalTime / activities.length / 3600);
+        let minute = Math.floor(((totalTime / activities.length) % 3600) / 60);
 
         return {
             hour,
             minute
         };
+    }
+
+    secondsToHourMinute(seconds) {
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const paddedMinutes = String(minutes).padStart(2, '0');
+        return {
+            hour: hours,
+            min: paddedMinutes,
+        }
     }
 
     percentageToday(hourToday, hourYesterday) {
@@ -104,6 +119,14 @@ class utilities {
             const dateA = new Date(a.created_at);
             const dateB = new Date(b.created_at);
             return dateB - dateA;
+        });
+    }
+
+    sortAttendanceByCreatedAtReverse(attendanceArray) {
+        return attendanceArray.sort((a, b) => {
+            const dateA = new Date(a.created_at);
+            const dateB = new Date(b.created_at);
+            return dateA - dateB;
         });
     }
 
@@ -162,6 +185,37 @@ class utilities {
             isLate,
             isUnderTime,
         };
+    }
+
+    getMondayAndFriday(date) {
+        let startDate = new Date(date);
+        startDate.setHours(0, 0, 0, 0); //
+        // Calculate the current day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+        const currentDayOfWeek = startDate.getDay();
+
+        // Calculate the start date of the current week (assuming Sunday is the first day of the week)
+        const startOfWeek = new Date(startDate);
+        startOfWeek.setDate(startDate.getDate() - currentDayOfWeek + 1);
+
+        // Calculate the end date of the current week (Friday)
+        const endOfWeek = new Date(startOfWeek);
+        endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+        return {
+            startOfWeek: startOfWeek,
+            endOfWeek: endOfWeek,
+        }
+    }
+
+    /**
+     * Calculate average activity level
+     * @param {*} total_hour 
+     * @param {*} total_active 
+     * @returns activity level
+     */
+    calculateAverageActivityPerDay(total_hour, total_active) {
+        let total = Number(total_active) / Number(total_hour) * 100;
+        return parseFloat(total).toFixed(2);
     }
 }
 

@@ -4,6 +4,7 @@ class Header extends Component {
     constructor(props) {
         super(props);
         this.props = props;
+
         this.state = {
             showMenu: false,
         }
@@ -27,9 +28,9 @@ class Header extends Component {
                             loading="lazy" alt="" className="image-100" /></a>
                 </div>
                 <div className="ry_main-style1_top-nav_right">
-                    <form action="/search" className="search w-form"><input type="search" className="search-input-2 w-input"
+                    {/* <form action="/search" className="search w-form"><input type="search" className="search-input-2 w-input"
                         maxLength="256" name="query" placeholder="Search" id="search" required="" /><input type="submit"
-                            value="" className="search-button-2 w-button" /></form>
+                            value="" className="search-button-2 w-button" /></form> */}
                     <div className="rb-sidebar-avatar"><img
                         src="https://assets.website-files.com/647edc411cb7ba0f95e2d12c/647ef7a875a3469fe6149589_nav_02.svg"
                         loading="lazy" alt="" /></div>

@@ -2,6 +2,7 @@ import { Meteor } from "meteor/meteor";
 import { attendanceCollection, profileCollection } from "../../db";
 import { TIMELINE } from "../../common";
 import { Mongo } from "meteor/mongo";
+import utilities from "../../classes/server/services/utilities";
 
 class TimelineMethods {
     method() {
@@ -14,100 +15,54 @@ class TimelineMethods {
                     startDate = new Date();
                 }
 
-                startDate.setHours(0, 0, 0, 0); //
-                // Calculate the current day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-                const currentDayOfWeek = startDate.getDay();
-
-                // Calculate the start date of the current week (assuming Sunday is the first day of the week)
-                const startOfWeek = new Date(startDate);
-                startOfWeek.setDate(startDate.getDate() - currentDayOfWeek + 1);
-
-                // Calculate the end date of the current week (Friday)
-                const endOfWeek = new Date(startOfWeek);
-                endOfWeek.setDate(startOfWeek.getDate() + 6);
+                let day = utilities.getMondayAndFriday(startDate);
 
                 let pipeline = [
                     {
                         $match: {
                             userId: id,
-                            date: {
-                                $gte: startOfWeek,
-                                $lte: endOfWeek
+                            created_at: {
+                                $gte: day.startOfWeek.toISOString(),
+                                $lte: day.endOfWeek.toISOString(),
                             }
                         }
                     },
                     {
-                        $sort: { date: -1 }
+                        $sort: { created_at: -1 }
                     }
                 ];
 
                 let doc = await attendanceCollection.rawCollection().aggregate(pipeline).toArray();
+                let sortedActivity = utilities.sortAttendanceByCreatedAtReverse(doc);
+                let activity = []
+                if (doc.length > 0) {
+                    sortedActivity.forEach(element => {
+                        activity.push(utilities.secondsToHourMinute(element.billable));
+                    });
+                }
                 let output = {
                     mon: {
-                        hour: 0,
-                        min: 0
+                        hour: activity.length > 0 ? activity[0].hour : 0,
+                        min: activity.length > 0 ? activity[0].min : 0
                     },
                     tue: {
-                        hour: 0,
-                        min: 0
+                        hour: activity.length > 1 ? activity[1].hour : 0,
+                        min: activity.length > 1 ? activity[2].min : 0
                     },
                     wed: {
-                        hour: 0,
-                        min: 0
+                        hour: activity.length > 2 ? activity[2].hour : 0,
+                        min: activity.length > 2 ? activity[2].min : 0
                     },
                     thu: {
-                        hour: 0,
-                        min: 0
+                        hour: activity.length > 3 ? activity[3].hour : 0,
+                        min: activity.length > 3 ? activity[3].min : 0
                     },
                     fri: {
-                        hour: 0,
-                        min: 0
+                        hour: activity.length > 4 ? activity[4].hour : 0,
+                        min: activity.length > 4 ? activity[4].min : 0
                     },
-                    total: 0,
+                    total: utilities.getAverageOfficeTime(sortedActivity),
                 }
-                doc.map((item) => {
-                    if (item.status !== "Absent") {
-                        const startTimeParts = item.startTime.split(':');
-                        const endTimeParts = item.endTime.split(':');
-
-                        const startMinutes = parseInt(startTimeParts[0]) * 60 + parseInt(startTimeParts[1]);
-                        const endMinutes = parseInt(endTimeParts[0]) * 60 + parseInt(endTimeParts[1]);
-
-                        const officeMinutes = endMinutes - startMinutes;
-                        output.total += officeMinutes;
-
-                        // Determine the day of the week for the current item's date
-                        const itemDate = new Date(item.date);
-                        const dayOfWeek = itemDate.getDay();
-
-                        // Update the corresponding day's total time
-                        switch (dayOfWeek) {
-                            case 1: // Monday
-                                output.mon.hour += Math.floor(officeMinutes / 60);
-                                output.mon.min += Math.floor(officeMinutes % 60);
-                                break;
-                            case 2: // Tuesday
-                                output.tue.hour += Math.floor(officeMinutes / 60);
-                                output.tue.min += Math.floor(officeMinutes % 60);
-                                break;
-                            case 3: // Wednesday
-                                output.wed.hour += Math.floor(officeMinutes / 60);
-                                output.wed.min += Math.floor(officeMinutes % 60);
-                                break;
-                            case 4: // Thursday
-                                output.thu.hour += Math.floor(officeMinutes / 60);
-                                output.thu.min += Math.floor(officeMinutes % 60);
-                                break;
-                            case 5: // Friday
-                                output.fri.hour += Math.floor(officeMinutes / 60);
-                                output.fri.min += Math.floor(officeMinutes % 60);
-                                break;
-                            // Handle other days or ignore weekends (0 and 6)
-                        }
-                    }
-                })
-
-
 
                 return output;
 

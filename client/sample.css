@@ -549,6 +549,7 @@ button,
 
 .text-red {
     color: rgb(255, 75, 75);
+    font-weight: 700;
 }
 
 .w-form-done {

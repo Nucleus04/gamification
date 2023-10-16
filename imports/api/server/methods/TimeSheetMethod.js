@@ -76,9 +76,9 @@ class TimesheetMethod {
                 let activeTime = utilities.getAverageActiveTime(attendance_this_week);
                 let officeTime = utilities.getAverageOfficeTime(attendance_this_week);
                 return {
-                    officeHour: attendance_this_week.length > 0 ? `${officeTime.hour} : ${officeTime.minute}` : 0,
+                    officeHour: attendance_this_week.length > 0 ? `${officeTime.hour} h : ${officeTime.minute} m` : 0,
                     productivity: attendance_this_week.length > 0 ? avgactivity : 0,
-                    activeTime: attendance_this_week.length > 0 ? `${activeTime.hour} : ${activeTime.minute}` : 0,
+                    activeTime: attendance_this_week.length > 0 ? `${activeTime.hour} h : ${activeTime.minute} m` : 0,
                 }
 
 

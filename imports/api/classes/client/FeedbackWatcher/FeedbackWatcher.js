@@ -7,14 +7,6 @@ import { feedbackCollection, pointSystem } from "../../../db";
 class FeedbackWatcher extends Watcher {
     #feedback = [];
     #feedbackNewAve = null;
-    // #feedbackOldAve = null;
-    // #summary = {
-    //     done: 0,
-    //     notResponded: 0,
-    //     declined: 0,
-    //     invited: 0,
-    //     month: 0,
-    // }
     constructor(parent) {
         super(parent);
     }
@@ -44,7 +36,6 @@ class FeedbackWatcher extends Watcher {
             teamwork: parseFloat(totalteam / feedback.length).toFixed(2),
             integrity: parseFloat(totalint / feedback.length).toFixed(2),
             accountability: parseFloat(totalacc / feedback.length).toFixed(2),
-            // total: parseFloat((communication + teamwork + integrity + accountability) / 4).toFixed(2)
         }
     }
 
@@ -62,7 +53,6 @@ class FeedbackWatcher extends Watcher {
     }
 
 
-    //New methods
     submitFeedback(document, userId) {
         return new Promise((resolve, reject) => {
             this.Parent.callFunc(FEEDBACK.SUBMIT_FEEDBACK, { document: document, userId: userId }).then((result) => {

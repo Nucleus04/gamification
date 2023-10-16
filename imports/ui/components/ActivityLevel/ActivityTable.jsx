@@ -35,7 +35,7 @@ class ActivityTable extends Component {
                             <div className="rb-table-col _15">
                                 <div className="rb-table-cell">
                                     <div className="table-header-div">
-                                        <div>Project</div>
+                                        <div>Team</div>
                                     </div>
                                 </div>
                             </div>
@@ -88,7 +88,7 @@ class ActivityTable extends Component {
                             {
                                 this.props.activity.map((item) => {
                                     if (this.props.filter) {
-                                        if (item.project === this.props.filter) {
+                                        if (item.team === this.props.filter) {
                                             return (
                                                 <ActivityRow key={item._id} details={item} />
                                             )

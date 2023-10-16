@@ -18,6 +18,8 @@ import Insight from "../../ui/pages/Insights";
 import ProtectedRoute from "./ProtectedRoute";
 import Settings from "../../ui/pages/Settings";
 import Gamification from "../../ui/pages/Gamification";
+import FeedbackPage from "../../ui/pages/Feedback";
+import FeedbackItem from "../../ui/pages/FeedabckItem";
 function Routers() {
     return (
         <BrowserRouter>
@@ -39,6 +41,8 @@ function Routers() {
                 {/* <Route exact path='/insights' element={<ProtectedRoute element={<Insight />} />} /> */}
                 <Route exact path='/settings' element={<ProtectedRoute element={<Settings />} />} />
                 <Route exact path='/gamification' element={<ProtectedRoute element={<Gamification />} />} />
+                <Route exact path='/feedback-page' element={<ProtectedRoute element={<FeedbackPage />} />} />
+                <Route exact path='/feedback-list-secret' element={<ProtectedRoute element={<FeedbackItem />} />} />
             </Routes>
         </BrowserRouter>
     )

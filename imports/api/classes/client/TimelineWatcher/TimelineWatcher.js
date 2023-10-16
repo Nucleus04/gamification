@@ -29,7 +29,7 @@ class TimelineWatcher extends Watcher {
                     this.#db.insert(element);
                 });
             }).catch((error) => {
-                console.log(error);
+                //console.log(error);
             })
         })
     }

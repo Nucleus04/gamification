@@ -13,7 +13,7 @@ class AveOfficeTime extends Component {
                         <div className="card_dashboard-label">Office Time</div>
                         <div className="ry_p-style1">Average per Shift</div>
                     </div>
-                    <h1 className="ry_h3-display1 weight-semibold">{this.props.data} h</h1>
+                    <h1 className="ry_h3-display1 weight-semibold">{this.props.data}</h1>
                 </div>
             </div>
         )

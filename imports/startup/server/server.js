@@ -19,6 +19,7 @@ import GamificationPublication from '../../api/server/publication/GamificationPu
 import AttendancePublication from '../../api/server/publication/AttendancePublication';
 import FeedbackPublication from '../../api/server/publication/FeedbackPublication';
 import RewardMethods from '../../api/server/methods/RewardMethods';
+import AppFeedback from '../../api/server/methods/AppFeedback';
 class Server {
     _init() {
 
@@ -52,6 +53,7 @@ class Server {
             GamificationPublication.inventory();
             FeedbackPublication.feedback();
             GamificationPublication.leaderboards();
+            AppFeedback.methods();
         })
     }
 }

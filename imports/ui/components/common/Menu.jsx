@@ -16,6 +16,7 @@ class MenuComponent extends Component {
         this.props = props;
         this.state = {
             profile: null,
+            isLoading: false,
         }
     }
     handleSignout() {
@@ -24,9 +25,13 @@ class MenuComponent extends Component {
         });
     }
     async componentDidMount() {
+        this.setState({
+            isLoading: true,
+        })
         await DashboardWatcher.retrieveProfile();
         this.setState({
             profile: DashboardWatcher.getProfile,
+            isLoading: false,
         })
     }
     render() {
@@ -220,11 +225,17 @@ class MenuComponent extends Component {
                     </div>
                 </div>
                 <div className="ry_sidebar-style1_bottom">
+                    <Link to="/feedback-page" className="ry_sidemenu-link-style1 w-inline-block" style={{ marginBottom: "20px" }}>
+                        <div className="sidemenu-link-style1_left">
+                            <div className="ry_icon-side-embed w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16"> <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" /> <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" /> </svg></div>
+                            <div>Feedbacks</div>
+                        </div>
+                    </Link>
                     <div className="username-diiv">
-                        <div className={`rb-sidebar-avatar profile-text ${this.state.profile ? this.state.profile[0].firstname.charAt(0) : ""}`}>{this.state.profile ? this.state.profile[0].firstname.charAt(0) : ""}</div>
+                        <div className={`rb-sidebar-avatar profile-text ${this.state.isLoading && "skeleton"} ${this.state.profile ? this.state.profile[0].firstname.charAt(0) : ""}`}>{this.state.profile ? this.state.profile[0].firstname.charAt(0) : ""}</div>
                         <div className="rb-teacher-details">
-                            <div className="rb-sidebar-teacher-name">{this.state.profile ? this.state.profile[0].firstname + " " + this.state.profile[0].lastname : ""}</div>
-                            <div className="rb-sidebar-teacher-email">{this.state.profile ? this.state.profile[0].team === ADMIN ? "Administrator" : this.state.profile[0].team : ""}</div>
+                            <div className={`rb-sidebar-teacher-name ${this.state.isLoading && "skeleton"}`}>{this.state.profile ? this.state.profile[0].firstname + " " + this.state.profile[0].lastname : "oooooooooo"}</div>
+                            <div className={`rb-sidebar-teacher-email ${this.state.isLoading && "skeleton"}`}>{this.state.profile ? this.state.profile[0].team === ADMIN ? "Administrator" : this.state.profile[0].team : "oooooo"}</div>
                         </div>
                     </div><a href="/settings" className="ry_sidemenu-link-style1 w-inline-block">
                         <div className="sidemenu-link-style1_left">

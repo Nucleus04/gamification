@@ -140,4 +140,10 @@ export const REWARDS = {
     REDEEM_REWARD: 'redeem.rewards.methos',
 }
 
+
+export const APPFEEDBACK = {
+    UPLOAD: 'upload.feedback.application',
+    RETRIEVE: 'retrieve.feedback.items',
+}
+
 export const ADMIN = "8A5b#2D9@1E7c0A4B3!D8c6D8&A6B7F1D2#E1C9e5D8(A7B1F8C6B7D0E1!C9E5D8*A6B7F1D2#E1C9e5D8A6B7F1D2E1C9e5D8A6B7F1D2E1";

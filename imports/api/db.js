@@ -34,3 +34,8 @@ export const rewardsCollection = new Mongo.Collection("rewards", {
 export const inventoryCollection = new Mongo.Collection("inventory", {
     idGeneration: "MONGO",
 })
+
+
+export const appFeedbackCollection = new Mongo.Collection("app-feedabcks", {
+    idGeneration: "MONGO",
+})

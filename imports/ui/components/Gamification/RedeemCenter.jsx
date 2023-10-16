@@ -44,7 +44,7 @@ class RedeemCenter extends Component {
         })
     }
     handleRedeem(id, price) {
-        let currentPoints = GamificationWatcher.PointsAndCredits;
+        let currentPoints = GamificationWatcher.PointsAndCredits(Meteor.userId());
         if (window.confirm("Do you want to reddem this reward?")) {
             if (Number(currentPoints[0].credits) < Number(price)) {
                 alert("Oops! Insuficient credits")

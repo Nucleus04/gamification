@@ -35,13 +35,17 @@ class ActivityWatcher extends Watcher {
             })
         })
     }
-
+    removeLastBasis() {
+        this.#lastbasis = null;
+    }
     retrieveUsers() {
         return new Promise((resolve, reject) => {
+            this.#db.remove({});
+            this.#lastbasis = null;
             this.Parent.callFunc(TIMELINE.RETRIEVEUSER, this.#lastbasis).then((result) => {
                 const uniqueTeamsList = result
-                    .filter(element => element.project) // Filter out elements with no "project" field
-                    .map(element => element.project) // Extract the "project" field
+                    .filter(element => element.team) // Filter out elements with no "project" field
+                    .map(element => element.team) // Extract the "project" field
                     .filter((value, index, self) => self.indexOf(value) === index); // Get unique teams
 
                 this.#projects = uniqueTeamsList;

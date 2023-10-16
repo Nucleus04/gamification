@@ -5,11 +5,13 @@ import TopCardReport from "../components/timesheets/TopCardReport";
 import ActivityTable from "../components/ActivityLevel/ActivityTable";
 import ActivityWatcher from "../../api/classes/client/ActivityWatcher/ActivityWatcher";
 import XLSX from 'xlsx';
+import { ADMIN } from "../../api/common";
 
 class ActivityLevel extends Component {
     constructor(props) {
         super(props);
         this.props = props;
+        ActivityWatcher.setWatcher(this, 'activity');
         this.state = {
             projects: ActivityWatcher.Projects,
             today: "",
@@ -39,14 +41,16 @@ class ActivityLevel extends Component {
             filter: filter,
         })
     }
-    handleChange(event) {
+    async handleChange(event) {
         this.setState({
             today: new Date(event.target.value).toDateString(),
             showDate: false,
             date: event.target.value,
         })
         ActivityWatcher.setDate(event.target.value);
-        ActivityWatcher.retrieveUsers();
+        ActivityWatcher.removeLastBasis();
+        await ActivityWatcher.retrieveUsers();
+        //await ActivityWatcher.retrieveActivities();
 
     }
     handleExport() {
@@ -81,6 +85,7 @@ class ActivityLevel extends Component {
         })
     }
     render() {
+        ActivityWatcher.initiateWatch("activity");
         return (
             <div>
                 <div className="ry_app-main-wrapper-style2">
@@ -127,7 +132,7 @@ class ActivityLevel extends Component {
                                                                 this.state.teams.map((item) => {
                                                                     return (
                                                                         <div className="filter-item" key={item} onClick={() => this.handleFilter(item)}>
-                                                                            {item}
+                                                                            {item === ADMIN ? "Administrator" : item}
                                                                         </div>
                                                                     )
                                                                 })
