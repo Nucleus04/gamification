@@ -3,16 +3,19 @@ import TimeSheetWatcher from "../../../api/classes/client/TimeSheetWatcher/TimeS
 const watcherName = "TIMESHEET";
 import { withTracker } from "meteor/react-meteor-data";
 import TimesheetsRow from "./TimesheetsRow";
+import AttendanceWatcher from "../../../api/classes/client/AttendanceWatcher/AttendanceWatcher";
 
 class TimesheetsTable extends Component {
     constructor(props) {
         super(props);
         this.props = props;
+        AttendanceWatcher.setWatcher(this, "attendance");
     }
 
     async retrieveTimesheet() {
         await TimeSheetWatcher.retrieveTimeSheet();
     }
+
     componentDidMount() {
         this.retrieveTimesheet();
     }
@@ -20,7 +23,6 @@ class TimesheetsTable extends Component {
         TimeSheetWatcher.retrieveTimeSheet();
     }
     render() {
-
         return (
             <div className="card_table">
                 <div className="rb-table students">
@@ -60,13 +62,13 @@ class TimesheetsTable extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="rb-table-col _15">
+                        {/* <div className="rb-table-col _15">
                             <div className="rb-table-cell">
                                 <div className="table-header-div">
                                     <div>Earnings ($)</div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="rb-table-content">
 
@@ -89,7 +91,9 @@ class TimesheetsTable extends Component {
 
 export default withTracker(() => {
     TimeSheetWatcher.initiateWatch(watcherName);
+    AttendanceWatcher.initiateWatch("attendance");
     return {
         timesheet: TimeSheetWatcher.TimesheetCollection,
+        //attendance: AttendanceWatcher.Attendance,
     }
 })(TimesheetsTable);

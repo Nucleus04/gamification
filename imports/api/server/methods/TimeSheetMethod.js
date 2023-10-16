@@ -7,31 +7,54 @@ import utilities from "../../classes/server/services/utilities";
 class TimesheetMethod {
     method() {
         return Meteor.methods({
-            [TIMESHEET.RETRIEVE]: async function ({ date, lastbasis }) {
-                let startDate = new Date(date);
-                let query = {};
-                if (date) {
-                    query = {
-                        date: { $lt: startDate }
+            [TIMESHEET.RETRIEVE]: async function ({ date, lastbasis, userId }) {
+                try {
+                    let startDate = new Date(date).toISOString();
+                    let query = null;
+                    if (userId) {
+                        query = { userId: userId };
+                    } else {
+                        query = {};
                     }
-                }
-                if (lastbasis) {
-                    query = {
-                        date: { $lt: new Date(lastbasis) }
+                    if (date) {
+                        if (userId) {
+                            query = {
+                                userId: userId,
+                                created_at: { $lt: startDate }
+                            }
+                        } else {
+                            query = {
+                                created_at: { $lt: startDate }
+                            }
+                        }
                     }
-                }
-                const pipeline = [
-                    { $match: query },
-                    { $sort: { "date": -1 } },
-                    { $limit: 10 }
-                ]
-                let attendance = await attendanceCollection.rawCollection().aggregate(pipeline).toArray();
-                const output = attendance.map(element => ({
-                    ...element,
-                    _id: element._id.toString()
+                    if (lastbasis) {
+                        if (userId) {
+                            query = {
+                                userId: userId,
+                                created_at: { $lt: new Date(lastbasis).toISOString() }
+                            }
+                        } else {
+                            query = {
+                                created_at: { $lt: new Date(lastbasis).toISOString() }
+                            }
+                        }
+                    }
+                    const pipeline = [
+                        { $match: query },
+                        { $sort: { "created_at": -1 } },
+                        { $limit: 10 }
+                    ]
+                    let attendance = await attendanceCollection.rawCollection().aggregate(pipeline).toArray();
+                    const output = attendance.map(element => ({
+                        ...element,
+                        _id: element._id.toString()
 
-                }))
-                return output;
+                    }))
+                    return output;
+                } catch (error) {
+                    console.log(error);
+                }
 
             },
 
