@@ -69,7 +69,7 @@ class Goals extends Component {
     }
 
     render() {
-
+        console.log(this.props.goals);
         return (
             <div className="ry_app-main-wrapper-style2">
                 <div data-w-id="ac3afbcf-65d0-1e1e-7bef-fe7812f0d460" className="icon_main-menu"><img
@@ -150,19 +150,15 @@ class Goals extends Component {
 }
 
 
-export default withTracker(async () => {
-    await DashboardWatcher.retrieveProfile()
+export default withTracker(() => {
     let profile = JSON.parse(localStorage.getItem(SESSION_KEYS.profile));
 
     if (profile[0].team === ADMIN) {
         GoalsWatcher.subscribe(PUBLICATION.GOALS_ADMIN);
-        return {
-            goals: GoalsWatcher.Goals,
-        }
     } else {
         GoalsWatcher.subscribe(PUBLICATION.USERGOALS, profile[0].userId);
-        return {
-            goals: GoalsWatcher.Goals,
-        }
+    }
+    return {
+        goals: GoalsWatcher.Goals,
     }
 })(Goals);
