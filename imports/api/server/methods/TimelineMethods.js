@@ -47,7 +47,7 @@ class TimelineMethods {
                     },
                     tue: {
                         hour: activity.length > 1 ? activity[1].hour : 0,
-                        min: activity.length > 1 ? activity[2].min : 0
+                        min: activity.length > 1 ? activity[1].min : 0
                     },
                     wed: {
                         hour: activity.length > 2 ? activity[2].hour : 0,
