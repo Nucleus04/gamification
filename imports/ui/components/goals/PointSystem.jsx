@@ -10,11 +10,8 @@ class PointSystem extends Component {
         super(props);
         this.props = props;
         this.state = {
-            zero: this.props.points && this.props.points.length > 0 ? this.props.points[0].zero : 0,
-            one: this.props.points && this.props.points.length > 0 ? this.props.points[0].one : 0,
-            two: this.props.points && this.props.points.length > 0 ? this.props.points[0].two : 0,
-            three: this.props.points && this.props.points.length > 0 ? this.props.points[0].three : 0,
-            morethanthree: this.props.points && this.props.points.length > 0 ? this.props.points[0].morethanthree : 0,
+            hour: 0,
+            point: 0,
             profile: "",
         }
         GoalsWatcher.setWatcher(this, name);
@@ -22,37 +19,15 @@ class PointSystem extends Component {
     updatePoints(event) {
         event.preventDefault();
         let doc = {
-            zero: this.state.zero,
-            one: this.state.one,
-            two: this.state.two,
-            three: this.state.three,
-            morethanthree: this.state.morethanthree,
+            hour: this.state.hour,
+            point: this.state.point,
         }
         GoalsWatcher.updatePoints(doc);
     }
     zeroCHange(event) {
+        const { name, value } = event.target;
         this.setState({
-            zero: event.target.value,
-        })
-    }
-    oneCHange(event) {
-        this.setState({
-            one: event.target.value,
-        })
-    }
-    twoCHange(event) {
-        this.setState({
-            two: event.target.value,
-        })
-    }
-    threeCHange(event) {
-        this.setState({
-            three: event.target.value,
-        })
-    }
-    morethanthreeCHange(event) {
-        this.setState({
-            morethanthree: event.target.value,
+            [name]: value,
         })
     }
     componentDidMount() {
@@ -64,17 +39,14 @@ class PointSystem extends Component {
     componentDidUpdate(prevProps) {
         if (prevProps.points !== this.props.points) {
             this.setState({
-                zero: this.props.points && this.props.points.length > 0 ? this.props.points[0].zero : 0,
-                one: this.props.points && this.props.points.length > 0 ? this.props.points[0].one : 0,
-                two: this.props.points && this.props.points.length > 0 ? this.props.points[0].two : 0,
-                three: this.props.points && this.props.points.length > 0 ? this.props.points[0].three : 0,
-                morethanthree: this.props.points && this.props.points.length > 0 ? this.props.points[0].morethanthree : 0,
+                point: this.props.points && this.props.points.length > 0 ? this.props.points[0].point : 0,
+                hour: this.props.points && this.props.points.length > 0 ? this.props.points[0].hour : 0,
             })
         }
     }
     render() {
         return (
-            <div className="card_dashboard _w-100">
+            <div className="card_dashboard _w-100" style={{ boxSizing: "border-box" }}>
                 <div className="w-form">
                     <form id="email-form-2" name="email-form-2" data-name="Email Form 2"
                         method="get" aria-label="Email Form 2">
@@ -86,72 +58,30 @@ class PointSystem extends Component {
                         <div className="ry_cardcontent-style1">
                             <div className="ry_cardcontent_row no-border">
                                 <div className="ry_cardcontent_rowcol">
-                                    <p className="ry_p-style1 mb-0 text-darkblue">Duration - Days</p>
+                                    <p className="ry_p-style1 mb-0 text-darkblue">Duration-Hours</p>
                                 </div>
                                 <div className="ry_cardcontent_rowcol _w-10">
-                                    <p className="ry_p-style1 mb-0 text-darkblue">Point</p>
+                                    <p className="ry_p-style1 mb-0 text-darkblue">Points</p>
                                 </div>
                             </div>
                             <div className="ry_cardcontent_row no-border">
                                 <div className="ry_cardcontent_rowcol">
-                                    <p className="ry_p-style1 mb-0">0</p>
+                                    {
+                                        this.state.profile && this.state.profile.team === ADMIN ?
+                                            (<p className="ry_p-style1 mb-0"><input type="number" name="hour" className="points-input" value={this.state.hour} onChange={this.zeroCHange.bind(this)} /></p>) :
+                                            (<p className="ry_p-style1 mb-0 text-darkblue">{this.state.hour}</p>)
+                                    }
                                 </div>
                                 <div className="ry_cardcontent_rowcol _w-10">
                                     {
                                         this.state.profile && this.state.profile.team === ADMIN ?
-                                            (<input type="number" className="points-input" value={this.state.zero} onChange={this.zeroCHange.bind(this)} />) :
-                                            (<p className="ry_p-style1 mb-0 text-darkblue">{this.state.zero}</p>)
+                                            (<input type="number" className="points-input" name="point" value={this.state.point} onChange={this.zeroCHange.bind(this)} />) :
+                                            (<p className="ry_p-style1 mb-0 text-darkblue">{this.state.point}</p>)
                                     }
                                 </div>
                             </div>
-                            <div className="ry_cardcontent_row no-border">
-                                <div className="ry_cardcontent_rowcol">
-                                    <p className="ry_p-style1 mb-0">1</p>
-                                </div>
-                                <div className="ry_cardcontent_rowcol _w-10">
-                                    {
-                                        this.state.profile && this.state.profile.team === ADMIN ?
-                                            (<input type="number" className="points-input" value={this.state.one} onChange={this.oneCHange.bind(this)} />) :
-                                            (<p className="ry_p-style1 mb-0 text-darkblue">{this.state.one}</p>)
-                                    }
-                                </div>
-                            </div>
-                            <div className="ry_cardcontent_row no-border">
-                                <div className="ry_cardcontent_rowcol">
-                                    <p className="ry_p-style1 mb-0">2</p>
-                                </div>
-                                <div className="ry_cardcontent_rowcol _w-10">
-                                    {
-                                        this.state.profile && this.state.profile.team === ADMIN ?
-                                            (<input type="number" className="points-input" value={this.state.two} onChange={this.twoCHange.bind(this)} />) :
-                                            (<p className="ry_p-style1 mb-0 text-darkblue">{this.state.two}</p>)
-                                    }
-                                </div>
-                            </div>
-                            <div className="ry_cardcontent_row no-border">
-                                <div className="ry_cardcontent_rowcol">
-                                    <p className="ry_p-style1 mb-0">3</p>
-                                </div>
-                                <div className="ry_cardcontent_rowcol _w-10">
-                                    {
-                                        this.state.profile && this.state.profile.team === ADMIN ?
-                                            (<input type="number" className="points-input" value={this.state.three} onChange={this.threeCHange.bind(this)} />) :
-                                            (<p className="ry_p-style1 mb-0 text-darkblue">{this.state.three}</p>)
-                                    }
-                                </div>
-                            </div>
-                            <div className="ry_cardcontent_row no-border">
-                                <div className="ry_cardcontent_rowcol">
-                                    <p className="ry_p-style1 mb-0">Morethan 3</p>
-                                </div>
-                                <div className="ry_cardcontent_rowcol _w-10">
-                                    {
-                                        this.state.profile && this.state.profile.team === ADMIN ?
-                                            (<input type="number" className="points-input" value={this.state.morethanthree} onChange={this.morethanthreeCHange.bind(this)} />) :
-                                            (<p className="ry_p-style1 mb-0 text-darkblue">{this.state.morethanthree}</p>)
-                                    }
-                                </div>
-                            </div>
+                            <br />
+                            <p>Task complexity is based on how long can you finish a task. If you finish a <b>{this.state.hour}</b> hours task, you will earn <b>{this.state.point}</b> points.</p>
 
                         </div>
                         {

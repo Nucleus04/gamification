@@ -31,35 +31,18 @@ class GoalsItem extends Component {
         })
     }
     calculateTotalPoints() {
-        let startDate = new Date(this.props.details.created_At);
-        let dueDate = new Date(this.props.details.due_date);
+        let startDate = new Date(this.props.details.created_at);
+        let dueDate = this.props.details.due_date ? new Date(this.props.details.due_date) : new Date();
         const timeDifferenceMs = dueDate - startDate;
-        const timeDifferenceDays = Math.floor(timeDifferenceMs / (1000 * 60 * 60 * 24));
-        let difference = Number(timeDifferenceDays);
-        let point = 0;
-        switch (difference) {
-            case 0:
-                point = this.props.points.length > 0 ? this.props.points[0].zero : 0;
-                break;
-            case 1:
-                point = this.props.points.length > 0 ? this.props.points[0].one : 0;
-                break;
-            case 2:
-
-                point = this.props.points.length > 0 ? this.props.points[0].two : 0;
-
-                break;
-            case 3:
-                point = this.props.points.length > 0 ? this.props.points[0].three : 0;
-                break;
-            default:
-                point = 0;
-                break;
+        const timeDifferenceHours = timeDifferenceMs / 3600000;
+        let point = this.props.points.length > 0 ? Math.floor(timeDifferenceHours) * (this.props.points[0].point / this.props.points[0].hour) : 0;
+        if (point < 0) {
+            point = 0;
         }
-        if (difference > 3) {
-            point = this.props.points.length > 0 ? this.props.points[0].morethanthree : 0;
+        if (Math.floor(timeDifferenceHours) === 0 && point === 0) {
+            point = this.props.points.length > 0 ? this.props.points[0].point : 0;
         }
-        return point;
+        return Math.floor(point);
     }
     componentDidMount() {
         this.retrieveComments();
@@ -83,10 +66,10 @@ class GoalsItem extends Component {
     }
     handleShowOptions() {
         this.setState({
-            showOptions: true,
+            showOptions: !this.state.showOptions,
         })
     }
-    closeOptions() {
+    async closeOptions() {
         this.setState({
             showOptions: false,
         })
@@ -104,12 +87,12 @@ class GoalsItem extends Component {
             <div>
                 <div className="ry_review">
                     <div className="ry_reviewleft">
-                        <div className={`ry_goalsstatus ${this.props.timeDifference > 2 ? "bg-green" : this.props.timeDifference < 3 && this.props.timeDifference > 0 ? "bg-red" : "bg-yellow"}`}></div>
+                        <div className={`ry_goalsstatus ${this.props.details.status === "completed" ? "bg-green" : this.props.details.status === "ongoing" ? "bg-yellow" : this.props.details.status === "unstarted" ? "bg-skyblue" : ""}`}></div>
                     </div>
                     <div className="ry_reviewright flex-horizontal">
                         <div className="ry_reviewrighttop flex-vertical">
-                            <p className="ry_p-style1 mb-0 text-darkblue text-semibold">{this.props.details.description}</p>
-                            <p className="ry_p-style2">{new Date(this.props.details.due_date).toDateString()}</p>
+                            <p className="ry_p-style1 mb-0 text-darkblue text-semibold" onClick={() => this.props.onSelect(this.props.details, this.calculateTotalPoints())}>{this.props.details.goalTitle}</p>
+                            <p className="ry_p-style2" onClick={() => this.props.onSelect(this.props.details, this.calculateTotalPoints())}>{this.props.details.due_date ? new Date(this.props.details.due_date).toDateString() : new Date().toDateString()} </p>
                             <div className="ry_reviewmicro mt-10">
                                 <div className="ry_reviewmicro_icon" onClick={this.showComments.bind(this)}><img
                                     src="https://assets.website-files.com/647edc411cb7ba0f95e2d12c/647f3b7ec8d98bb32195c8ea_review_02.svg"
@@ -130,10 +113,10 @@ class GoalsItem extends Component {
                                 {
                                     this.state.comments.map((item) => {
                                         return (
-                                            <div key={Math.random()}>
-                                                <div className="commentItem">
-                                                    <p><b>{item.author}</b></p>
-
+                                            <div key={Math.random()} className="commentItem">
+                                                <div>
+                                                    <p style={{ margin: "0" }}><b>{item.author}</b></p>
+                                                    <p>{new Date(item.created_at).toDateString()}</p>
                                                     <p>{item.message}</p>
                                                 </div>
                                             </div>
@@ -143,10 +126,13 @@ class GoalsItem extends Component {
                             </div>
 
                         </div>
-                        <div className="ry_reviewrightbottom flex-vertical">
+                        <div className="ry_reviewrightbottom flex-vertical" onClick={() => this.props.onSelect(this.props.details, this.calculateTotalPoints())}>
                             <h1 className="ry_h3-display1 text-violet">{this.props.details.percentage}%</h1>
-                            <p className="ry_p-style2">{this.props.timeDifference > 0 ? `Ends in ${this.props.timeDifference} days` : `${Math.abs(this.props.timeDifference)} days behind`}</p>
+                            <p className="ry_p-style2">{this.props.dayBeforeEnd > 0 ? `Ends in ${this.props.dayBeforeEnd} days` : `${Math.abs(this.props.dayBeforeEnd)} days behind`}</p>
                             <p className="ry_p-style2">Points to be earned: {this.calculateTotalPoints()}</p>
+                            {
+                                this.props.timeDifference < 0 ? <p style={{ color: "red", fontWeight: "700" }}>Overdue</p> : ""
+                            }
                         </div>
                     </div>
 
@@ -154,12 +140,14 @@ class GoalsItem extends Component {
                         this.state.profile.team === ADMIN ?
                             ("") :
                             (
-                                <div className="ry_options" onClick={this.handleShowOptions.bind(this)}><img
+                                <div className="ry_options"><img onClick={this.handleShowOptions.bind(this)}
                                     src="https://assets.website-files.com/647edc411cb7ba0f95e2d12c/648048a50a92ccf7494e67f5_goals_01.svg"
                                     loading="lazy" alt="" />
-                                    <div className={`goals-options-modal ${this.state.showOptions ? "" : "display-none"}`} onMouseLeave={this.closeOptions.bind(this)}>
+                                    <div className={`goals-options-modal ${this.state.showOptions ? "" : "display-none widthhieght0"}`} >
                                         <span>
-                                            <button className="bg-green goals-option-button" onClick={this.handleCompletedGoal.bind(this)}>Completed</button>
+                                            {
+                                                this.props.details.status !== "completed" ? <button className="bg-green goals-option-button" onClick={this.handleCompletedGoal.bind(this)}>Completed</button> : ""
+                                            }
                                             <button className="bg-red goals-option-button" onClick={this.handleDeleteGoals.bind(this)}>Delete</button>
                                         </span>
                                     </div>

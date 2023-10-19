@@ -11,9 +11,18 @@ import PointSystem from "../components/goals/PointSystem";
 import DashboardWatcher from "../../api/classes/client/DashboardWatcher/DashboardWatcher";
 import HubstaffWatcher from "../../api/classes/client/Authentication/HubstaffWatcher";
 import AttendanceWatcher from "../../api/classes/client/AttendanceWatcher/AttendanceWatcher";
+import { useNavigate } from "react-router-dom";
 
 
-class Goals extends Component {
+
+function Goals({ goals }) {
+    const navigate = useNavigate();
+    return (
+        <GoalsComponent navigate={navigate} goals={goals} />
+    )
+}
+
+class GoalsComponent extends Component {
     constructor(props) {
         super(props);
         this.props = props;
@@ -21,7 +30,11 @@ class Goals extends Component {
             showAddGoalModal: false,
             summary: null,
             profile: "",
+            currentDataForGoalMOdal: null,
+            point: 0,
         }
+
+        this.onGoalPick = this.onGoalPick.bind(this);
     }
 
     async retrieveGoals() {
@@ -38,7 +51,20 @@ class Goals extends Component {
             await HubstaffWatcher.getAccessToken(authorizationCode);
         } else {
             console.error('Authorization Code not found in the URL.');
+            let profile = JSON.parse(localStorage.getItem(SESSION_KEYS.profile));
+            if (profile[0].team !== ADMIN) {
+                alert("You do not authorize this application to hubstaff. You will be redirected to login page. Authorization is a must unless you are Administrator.");
+                this.props.navigate("/");
+            }
         }
+    }
+    getPreviousSunday(currentDate) {
+        const dayOfWeek = currentDate.getDay();
+        const daysUntilSunday = (dayOfWeek + 7 - 1) % 7;
+        const previousSunday = new Date(currentDate);
+        previousSunday.setDate(currentDate.getDate() - daysUntilSunday);
+
+        return previousSunday;
     }
     async componentDidMount() {
         await DashboardWatcher.retrieveProfile()
@@ -52,14 +78,23 @@ class Goals extends Component {
         }
         let token = JSON.parse(localStorage.getItem(SESSION_KEYS.access_token));
         let date_end = new Date();
-        let date_start = new Date();
+        let date_start = this.getPreviousSunday(new Date());
         await AttendanceWatcher.requestActivityToApi(token, date_start, date_end);
 
     }
 
     handleShowModal() {
+        GoalsWatcher.addGoals();
+        // this.setState({
+        //     showAddGoalModal: true,
+        // })
+    }
+
+    onGoalPick(data, point) {
         this.setState({
             showAddGoalModal: true,
+            currentDataForGoalMOdal: data,
+            point: point,
         })
     }
     closeModal() {
@@ -69,7 +104,6 @@ class Goals extends Component {
     }
 
     render() {
-        console.log(this.props.goals);
         return (
             <div className="ry_app-main-wrapper-style2">
                 <div data-w-id="ac3afbcf-65d0-1e1e-7bef-fe7812f0d460" className="icon_main-menu"><img
@@ -94,9 +128,6 @@ class Goals extends Component {
                                     <div className="ry_bodytop">
                                         <div className="ry_bodytop_left">
                                             <h1 className="ry_h2-display1">All Goals</h1>
-                                            {/* <div className="ry_arrowdown"><img
-                                                src="https://assets.website-files.com/647edc411cb7ba0f95e2d12c/647f22d72fcff739ae70c277_icon_arrow.svg"
-                                                loading="lazy" alt="" /></div> */}
                                         </div>
                                         {
                                             this.state.profile.team === ADMIN ? "" :
@@ -116,15 +147,15 @@ class Goals extends Component {
                                         <div className="ry_bodycontainer_left">
                                             {
 
-                                                this.props.goals ? this.props.goals.map((item) => {
-                                                    const dueDate = new Date(item.due_date);
+                                                this.props.goals.length > 0 ? this.props.goals.map((item) => {
+                                                    const dueDate = item.due_date ? new Date(item.due_date) : new Date();
                                                     const currentDate = new Date();
                                                     const timeDifferenceMs = dueDate - currentDate;
                                                     const timeDifferenceDays = Math.floor(timeDifferenceMs / (1000 * 60 * 60 * 24));
                                                     return (
 
                                                         <div key={Math.random()}>
-                                                            <GoalsItem details={item} timeDifference={timeDifferenceDays} />
+                                                            <GoalsItem details={item} timeDifference={timeDifferenceMs} dayBeforeEnd={timeDifferenceDays} onSelect={this.onGoalPick} />
                                                         </div>
 
                                                     )
@@ -141,7 +172,7 @@ class Goals extends Component {
                                 </div>
                             </div>
                         </div>
-                        <AddGoalsComponent showModal={this.state.showAddGoalModal} closeModal={this.closeModal.bind(this)} />
+                        <AddGoalsComponent showModal={this.state.showAddGoalModal} data={this.state.currentDataForGoalMOdal} point={this.state.point} closeModal={this.closeModal.bind(this)} />
                     </div>
                 </div>
             </div>

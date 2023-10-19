@@ -25,18 +25,20 @@ class GoalsMethods {
                 }
             },
 
-            [GOALS.ADDGOALS]: function ({ id, description, due_date }) {
-                let newDateFormat = new Date(due_date);
-                const data = {
+            [GOALS.ADDGOALS]: function (id) {
+                let fresh_goal = {
                     userId: id,
-                    description: description,
-                    status: "inProgress",
+                    created_at: new Date(),
+                    checklistItems: [],
+                    description: {
+                        __html: "",
+                    },
+                    due_date: null,
+                    goalTitle: "New Goal",
                     percentage: 0,
-                    due_date: newDateFormat,
-                    created_At: new Date(),
-
+                    status: "unstarted",
                 }
-                return goalsCollection.insert(data);
+                return goalsCollection.insert(fresh_goal);
 
             },
             [GOALS.ADDCOMMENR]: function ({ comment, id, name }) {
@@ -62,12 +64,26 @@ class GoalsMethods {
                 }
             },
             [GOALS.UPDATESTATUS]: function (id) {
-                const status = "achieved";
+                const status = "completed";
                 try {
                     return goals.changeStatus(goalsCollection, id, status);
                 } catch (error) {
                     console.log(error);
                 }
+            },
+
+            [GOALS.UPDATEGOALDATA]: function ({ doc, id, point }) {
+                console.log(doc, id);
+                try {
+                    if (doc.status === "completed") {
+                        console.log("I will now add points", point);
+                        gamification.add_points(gamificationCollection, doc.userId, Number(point));
+                    }
+                    return goals.updateData(goalsCollection, doc, id);
+                } catch (error) {
+                    console.log(error);
+                }
+
             }
         })
     }

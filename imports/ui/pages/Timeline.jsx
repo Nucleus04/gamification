@@ -6,6 +6,7 @@ import TimelineRow from "../components/timeline/TimelineRow";
 import TimelineTable from "../components/timeline/TimelineTable";
 import TimelineWatcher from "../../api/classes/client/TimelineWatcher/TimelineWatcher";
 import XLSX from 'xlsx';
+import { ADMIN } from "../../api/common";
 
 class Timeline extends Component {
     constructor(props) {
@@ -38,7 +39,7 @@ class Timeline extends Component {
     }
     handleExport() {
         const data = [
-            ['Name', 'Project', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Total'],
+            ['Name', 'Team', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Total'],
         ];
         const history = TimelineWatcher.History;
         const users = TimelineWatcher.TimelineCollection.find({}).fetch();
@@ -46,7 +47,7 @@ class Timeline extends Component {
         for (let i = 0; i < users.length; i++) {
             let temp = [];
             temp.push(users[i].firstname + " " + users[i].lastname);
-            temp.push(users[i].project);
+            temp.push(users[i].team === ADMIN ? "Administrator" : users[i].team);
             temp.push(`${history[i].mon.hour}: ${history[i].mon.min}`)
             temp.push(`${history[i].tue.hour}: ${history[i].tue.min}`)
             temp.push(`${history[i].wed.hour}: ${history[i].wed.min}`)

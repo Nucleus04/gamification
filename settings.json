@@ -56,7 +56,7 @@
         "email"
     ],
     "personal_access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImRlZmF1bHQifQ.eyJqdGkiOiJVRktYbS9zWiIsImlzcyI6Imh0dHBzOi8vYWNjb3VudC5odWJzdGFmZi5jb20iLCJleHAiOjE3MDI0NzExNjIsImlhdCI6MTY5NDY5NTE2Miwic2NvcGUiOiJodWJzdGFmZjpyZWFkIn0.bLP_ZCAn2ydGcaN8UMT3WonY4facjzCso8ppj6ONnHL25gZEVLMVsLm67Ye8btG1XdOPJIZeKG_8C73X21aNBIAa_1fVbbMtd8MjvqffBYyA-kz_9AIOCN0tXbBXL5O-Xg1fGq-fXb97I3jmmPMxxsUEHvKEJxK17m1TsKufYvlTakxb98mkLzsdExsq86VdHEfqoaUnvuxvPr3ehKOJf5_Qy727t7WL2N7aWODCaLY2uU5ulaWu2dLEi4GESYcqEnnk55BTc79000B1YK6IVIFdDhvb20SLTmX5vDXjSMLon9negqfHoztzQkV-7-6hbwHACEINdpaZyz91tvTtIA",
-    "client_id": "SvFDbD4jtWJ8iCotYZ1A-ZgWYqAsa0swMfJV9MY7wTk",
-    "client_secret": "6LNMF6y5Hd2wQBHaRkURQGBRAscv4emZM0TkfufdTRRbpULcw5M3l5mPhmwb-sh86WSRadDBVJiSzHsnkuUF4w",
+    "client_id": "c8DtyhtpWvA7Rm-RWMgPBlIc-5llfNUj-GfdND5tNWM",
+    "client_secret": "27Lt5DkIdaFFPNFmUFhIfKhyhhIPbCe3zq_D-SgsyAqyMApPuzQvOGONnVwYlO1mmjBL7ATPI-DYHMzxLjS0Ww",
     "redirect_uri": "http://localhost:3000/goals"
 }

@@ -43,6 +43,7 @@ class RedeemCenter extends Component {
             itemPrice: "",
         })
     }
+
     handleRedeem(id, price) {
         let currentPoints = GamificationWatcher.PointsAndCredits(Meteor.userId());
         if (window.confirm("Do you want to reddem this reward?")) {
@@ -52,6 +53,10 @@ class RedeemCenter extends Component {
                 GamificationWatcher.redeemRewards(id);
             }
         }
+    }
+
+    handleRemove(id) {
+        GamificationWatcher.removeRewards(id);
     }
     render() {
 
@@ -79,7 +84,7 @@ class RedeemCenter extends Component {
                                         <div style={{ display: "flex", alignItems: "center", }}>
                                             <p style={{ fontSize: "20pt", marginRight: "20px", marginBottom: "0" }}>{item.price}<span><svg style={{ color: "rgb(0, 158, 76)", marginRight: "20px", marginLeft: "20px" }} xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-cash" viewBox="0 0 16 16"> <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" fill="#009e4c"></path> <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z" fill="#009e4c"></path> </svg></span></p>
                                             {
-                                                this.state.profile && this.state.profile[0].team !== ADMIN ? <button style={{ borderRadius: "15px", backgroundColor: "yellowgreen", height: "28px", marginRight: "20px", }} onClick={() => this.handleRedeem(item._id, item.price)}>Redeem</button> : ""
+                                                this.state.profile && this.state.profile[0].team !== ADMIN ? <button style={{ borderRadius: "15px", backgroundColor: "yellowgreen", height: "28px", marginRight: "20px", }} onClick={() => this.handleRedeem(item._id, item.price)}>Redeem</button> : <button style={{ borderRadius: "15px", backgroundColor: "red", color: "white", height: "28px", marginRight: "20px", }} onClick={() => this.handleRemove(item._id)}>Remove</button>
                                             }
                                         </div>
                                     </div>

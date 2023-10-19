@@ -5,7 +5,7 @@ import { goalsCollection, pointSystem } from "../../db";
 class GoalsPublication {
     publication() {
         return Meteor.publish(PUBLICATION.GOALS_ADMIN, () => {
-            let goalsList = goalsCollection.find({ status: { $ne: "achieved" } });
+            let goalsList = goalsCollection.find({});
             return goalsList;
         })
     }
@@ -22,7 +22,7 @@ class GoalsPublication {
     userGoalspublication() {
         return Meteor.publish(PUBLICATION.USERGOALS, function (userid) {
             if (userid) {
-                return goalsCollection.find({ userId: userid, status: { $ne: "achieved" } });
+                return goalsCollection.find({ userId: userid });
             }
         })
     }
