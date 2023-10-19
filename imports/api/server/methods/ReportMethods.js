@@ -33,9 +33,9 @@ class ReportMethods {
 
                 return {
                     today: today.length > 0 ? `${totalOfficeTimeToday.hour}h : ${totalOfficeTimeToday.minute}m` : `0 : 0`,
-                    percentageToday: utilities.percentageToday(totalOfficeTimeToday.hour, totalOfficeTimeYesterday.hour),
+                    percentageToday: parseFloat(utilities.percentageToday(totalOfficeTimeToday.hour, totalOfficeTimeYesterday.hour)).toFixed(2),
                     yesterday: yesterday.length > 0 ? `${totalOfficeTimeYesterday.hour}h : ${totalOfficeTimeYesterday.minute}m` : `0 : 0`,
-                    percentageYesterday: utilities.percentageToday(totalOfficeTimeYesterday.hour, totalOfficeTimeThisWeek.hour),
+                    percentageYesterday: parseFloat(utilities.percentageToday(totalOfficeTimeYesterday.hour, totalOfficeTimeThisWeek.hour)).toFixed(2),
                     week: attendance_this_week.length > 0 ? `${totalOfficeTimeThisWeek.hour}h : ${totalOfficeTimeThisWeek.minute}m` : "0 : 0",
                     activeToday: totalActiveMemberToday,
                     activeYesterday: totalActiveMemberYesterday,

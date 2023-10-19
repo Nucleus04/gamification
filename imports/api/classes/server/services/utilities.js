@@ -98,8 +98,8 @@ class utilities {
         activities.forEach(element => {
             totalTime = totalTime + element.billable;
         });
-        let hour = Math.floor(totalTime / activities.length / 360);
-        let minute = Math.floor(((totalTime / activities.length) % 360) % 60);
+        let hour = Math.floor(totalTime / 3600);
+        let minute = Math.floor(((totalTime) % 3600) % 60);
 
         if (activities.length > 0) {
             return {

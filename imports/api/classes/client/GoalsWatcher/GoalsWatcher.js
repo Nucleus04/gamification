@@ -18,7 +18,7 @@ class GoalsWatcher extends Watcher {
     }
 
     get Goals() {
-        return goalsCollection.find({}, { sort: { due_date: -1 } }).fetch();
+        return goalsCollection.find({}, { sort: { created_at: -1 } }).fetch();
     }
     get Points() {
         return pointSystem.find({ target: "goals" }).fetch();
@@ -64,11 +64,22 @@ class GoalsWatcher extends Watcher {
         })
     }
 
-    addGoals(description, due_date) {
+    addGoals() {
         return new Promise((resolve, reject) => {
-            this.Parent.callFunc(GOALS.ADDGOALS, { id: Meteor.userId(), description: description, due_date: due_date }).then((result) => {
+            this.Parent.callFunc(GOALS.ADDGOALS, Meteor.userId()).then((result) => {
                 this.#db.remove({});
                 this.retreiveGoals();
+                resolve();
+            }).catch((error) => {
+                console.log(error);
+                reject();
+            })
+        })
+    }
+
+    onUpdate(doc, id, point) {
+        return new Promise((resolve, reject) => {
+            this.Parent.callFunc(GOALS.UPDATEGOALDATA, { doc: doc, id: id, point: point }).then((result) => {
                 resolve();
             }).catch((error) => {
                 console.log(error);
@@ -103,6 +114,7 @@ class GoalsWatcher extends Watcher {
     updatePoints(doc) {
         return new Promise((resolve, reject) => {
             this.Parent.callFunc(GOALS.UPDATEPOINTS, doc).then((result) => {
+                alert("Successfully updated");
             }).catch((error) => {
                 console.log(error);
             })

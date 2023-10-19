@@ -21,8 +21,13 @@ class goals {
             goalId: id,
             message: comment,
             author: name,
+            created_at: new Date(),
         }
         return db.insert(data);
+    }
+
+    updateData(db, doc, id) {
+        return db.update({ _id: id }, doc);
     }
 
 }

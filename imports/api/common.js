@@ -73,6 +73,7 @@ export const GOALS = {
     UPDATEPOINTS: 'update.points.goals',
     COMPPLETEDGOAL: "completed.goals.update",
     UPDATESTATUS: "update.goals.status",
+    UPDATEGOALDATA: "update.goal.data",
 }
 
 
@@ -138,6 +139,7 @@ export const REWARDS = {
     RESET: "reset.points.leaderboards",
     ADD_ITEM: "rewards.add.item",
     REDEEM_REWARD: 'redeem.rewards.methos',
+    REMOVE_REWARDS: 'remove.rewards.method',
 }
 
 

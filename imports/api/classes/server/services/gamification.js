@@ -221,6 +221,13 @@ class gamification {
         return db.find({ _id: id }).fetch();
     }
 
+    /**
+     * 
+     * @param {*} db inventory collection
+     * @param {*} userId userid
+     * @param {*} item item to be added
+     * @returns 
+     */
     add_to_inventory(db, userId, item) {
         let doc = {
             userId: userId,
@@ -230,6 +237,11 @@ class gamification {
 
         return db.insert(doc);
 
+    }
+
+
+    remove_item_in_center(db, id) {
+        return db.remove(id);
     }
 
 }

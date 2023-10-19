@@ -18,8 +18,20 @@ class attendance {
      * @param {object} data 
      */
     update(id, data) {
-        this.database.update({ id: id }, { $set: {}, data });
+        console.log("updating------", id, data);
+        this.database.update({ id: id }, {
+            $set: {
+                keyboard: data.keyboard,
+                mouse: data.mouse,
+                overall: data.overall,
+                tracked: data.tracked,
+                input_tracked: data.input_tracked,
+                billable: data.billable,
+                updated_at: data.updated_at,
+            }
+        });
     }
+
     /**
      * Function to return activities from start date to present
      * @param {Date} startDate 
@@ -139,7 +151,7 @@ class attendance {
 
         console.log("Need to update", arr_to_update);
         console.log("Need to insert", arr_to_insert);
-        if (arr_to_update > 0) {
+        if (arr_to_update.length > 0) {
             arr_to_update.forEach((element) => {
                 this.update(element.id, element);
             })

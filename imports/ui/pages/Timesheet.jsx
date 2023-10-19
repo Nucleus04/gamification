@@ -6,6 +6,7 @@ import TopCardReport from "../components/timesheets/TopCardReport";
 import TimeSheetWatcher from "../../api/classes/client/TimeSheetWatcher/TimeSheetWatcher";
 import "../stylesheet/ReviewItem.css"
 import XLSX from 'xlsx';
+import { ADMIN } from "../../api/common";
 
 class TimeSheet extends Component {
     constructor(props) {
@@ -50,7 +51,7 @@ class TimeSheet extends Component {
         for (let i = 0; i < users.length; i++) {
             let temp = [];
             temp.push(users[i].firstname + " " + users[i].lastname);
-            temp.push(users[i].team);
+            temp.push(users[i].team === ADMIN ? "Administrator" : users[i].team);
             temp.push(`${history[i].date}`)
             temp.push(`${history[i].numberOfHours}: ${history[i].numberOfMinutes}`)
             temp.push(`${parseFloat(history[i].productivityLevel).toFixed(2)}`)

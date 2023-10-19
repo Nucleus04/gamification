@@ -130,6 +130,17 @@ class GamificationWatcher extends Watcher {
     }
 
 
+    removeRewards(id) {
+        return new Promise((resolve, reject) => {
+            this.Parent.callFunc(REWARDS.REMOVE_REWARDS, id).then((result) => {
+                alert("Item remove successfully.");
+            }).catch((error) => {
+                console.log(error);
+            })
+        })
+    }
+
+
 
 }
 

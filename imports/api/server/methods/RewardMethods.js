@@ -86,6 +86,14 @@ class RewardsMethods {
                     console.log(error);
                 }
 
+            },
+
+            [REWARDS.REMOVE_REWARDS]: function (id) {
+                try {
+                    return gamification.remove_item_in_center(rewardsCollection, id);
+                } catch (error) {
+                    console.log(error);
+                }
             }
         })
     }

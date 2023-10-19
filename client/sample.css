@@ -2780,13 +2780,16 @@ body {
 }
 
 .ry_popup {
-    width: 45%;
+    width: 60%;
     background-color: #c8c8c8;
     border-radius: 10px;
     flex-direction: column;
     padding: 0;
     display: flex;
     position: absolute;
+    min-width: 700px;
+    max-height: 640px;
+    overflow: auto;
 }
 
 .ry_popup-top {
@@ -4596,7 +4599,7 @@ body {
 .ry_goalsstatus {
     width: 12px;
     height: 12px;
-    background-color: #009245;
+    background-color: gray;
     border-radius: 100px;
     margin-top: 5px;
 }
@@ -5403,6 +5406,10 @@ body {
 
     .ry_reviewright.flex-horizontal {
         width: 100%;
+    }
+
+    .bg-skyblue {
+        background-color: skyblue;
     }
 
     .card_dashboard_bottom {

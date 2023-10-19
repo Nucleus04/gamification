@@ -55,7 +55,7 @@ class ActivityLevel extends Component {
     }
     handleExport() {
         const data = [
-            ['Name', 'Project', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Average'],
+            ['Name', 'Team', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Average'],
         ];
         const history = ActivityWatcher.History;
         const users = ActivityWatcher.ActivityUser;
@@ -63,7 +63,7 @@ class ActivityLevel extends Component {
         for (let i = 0; i < users.length; i++) {
             let temp = [];
             temp.push(users[i].firstname + " " + users[i].lastname);
-            temp.push(users[i].project);
+            temp.push(users[i].team === ADMIN ? "Administrator" : users[i].team);
             temp.push(`${history[i].mon}`)
             temp.push(`${history[i].tue}`)
             temp.push(`${history[i].wed}`)
