@@ -19,10 +19,11 @@ class MenuComponent extends Component {
             isLoading: false,
         }
     }
-    handleSignout() {
-        AuthenticationWatcher.Parent.logout((err) => {
-            this.props.navigate('/');
+    async handleSignout() {
+        await AuthenticationWatcher.Parent.logout((err) => {
+            if (err) console.log(err);
         });
+        this.props.navigate('/');
     }
     async componentDidMount() {
         this.setState({
